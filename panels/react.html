@@ -1,0 +1,113 @@
+<!--
+Custom Home Assistant panel example.
+
+Place this file is in <config>/panels/react.html
+
+Add to your configuration.yaml:
+
+panel_custom:
+  - name: react
+    sidebar_title: Example
+    sidebar_icon: mdi:checkbox-marked-outline
+    config:
+      title: Wow hello!
+-->
+
+<script src="https://fb.me/react-15.2.1.min.js"></script>
+<script src="https://fb.me/react-dom-15.2.1.min.js"></script>
+
+<!-- for development, replace with:
+<script src="https://fb.me/react-15.2.1.js"></script>
+<script src="https://fb.me/react-dom-15.2.1.js"></script>
+-->
+
+<dom-module id='ha-panel-react'>
+  <style>
+    .mount {
+      padding: 24px;
+    }
+  </style>
+  <template>
+    <div id='mount' class='mount'></div>
+  </template>
+</dom-module>
+
+<script>
+function ReactExample(props) {
+  var h = React.createElement;
+
+  return (
+    h('div', null,
+      h('h1', null, props.title || props.hass.config.core.location_name),
+      h('ul', null,
+        Object.values(props.hass.states).map(function(entity) {
+          return h(
+            'li', { key: entity.entity_id },
+            window.hassUtil.computeStateName(entity) + ': ' + entity.state);
+        })
+      )
+    )
+  );
+}
+
+Polymer({
+  is: 'ha-panel-react',
+
+  properties: {
+    // Home Assistant object
+    hass: {
+      type: Object,
+    },
+
+    // If should render in narrow mode
+    narrow: {
+      type: Boolean,
+      value: false,
+    },
+
+    // If sidebar is currently shown
+    showMenu: {
+      type: Boolean,
+      value: false,
+    },
+
+    // Home Assistant panel info
+    // panel.config contains config passed to register_panel serverside
+    panel: {
+      type: Object,
+    }
+  },
+
+  // This will make sure we forward changed properties to React
+  observers: [
+    'propsChanged(hass, narrow, showMenu, panel)',
+  ],
+
+  // Mount React when element attached
+  attached: function () {
+    this.mount(this.hass, this.narrow, this.showMenu, this.panel);
+  },
+
+  // Called when properties change
+  propsChanged: function (hass, narrow, showMenu, panel) {
+    this.mount(hass, narrow, showMenu, panel);
+  },
+
+  // Render React. Debounce in case multiple properties change.
+  mount: function (hass, narrow, showMenu, panel) {
+    this.debounce('mount', function () {
+      ReactDOM.render(React.createElement(ReactExample, {
+        hass: hass,
+        narrow: narrow,
+        showMenu: showMenu,
+        title: panel.config ? panel.config.title : null
+      }), this.$.mount);
+    }.bind(this));
+  },
+
+  // Unmount React node when panel no longer in use.
+  detached: function () {
+    ReactDOM.unmountComponentAtNode(this.$.mount);
+  },
+});
+</script>
