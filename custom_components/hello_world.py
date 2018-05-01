@@ -12,7 +12,7 @@ hello_world:
 """
 
 # The domain of your component. Should be equal to the name of your component.
-DOMAIN = "hello_world"
+DOMAIN = 'hello_world'
 
 
 def setup(hass, config):
