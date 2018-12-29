@@ -1,3 +1,5 @@
+import hassapi as hass
+
 counter = hass.states.get('sensor.my_counter')
 
 if counter is None:
