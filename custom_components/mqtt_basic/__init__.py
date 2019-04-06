@@ -23,13 +23,10 @@ import voluptuous as vol
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "mqtt_basic"
 
-# List of component names (string) your component depends upon.
-DEPENDENCIES = ['mqtt']
-
 CONF_TOPIC = 'topic'
 DEFAULT_TOPIC = 'home-assistant/mqtt_example'
 
-
+# Schema to validate the configured MQTT topic
 CONFIG_SCHEMA = vol.Schema({
     vol.Optional(CONF_TOPIC, default=DEFAULT_TOPIC): mqtt.valid_subscribe_topic
 })
@@ -45,14 +42,14 @@ def setup(hass, config):
         """A new MQTT message has been received."""
         hass.states.set(entity_id, payload)
 
-    mqtt.subscribe(hass, topic, message_received)
+    hass.components.mqtt.subscribe(topic, message_received)
 
     hass.states.set(entity_id, 'No messages')
 
     # Service to publish a message on MQTT.
     def set_state_service(call):
         """Service to send a message."""
-        mqtt.publish(hass, topic, call.data.get('new_state'))
+        hass.components.mqtt.publish(topic, call.data.get('new_state'))
 
     # Register our service with Home Assistant.
     hass.services.register(DOMAIN, 'set_state', set_state_service)

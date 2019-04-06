@@ -1,0 +1,8 @@
+{
+  "domain": "expose_service_async",
+  "name": "Expose Service (async)",
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/expose_service_async/",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}

@@ -1,0 +1,8 @@
+{
+  "domain": "mqtt_basic",
+  "name": "MQTT Basic Example",
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/mqtt_basic/",
+  "dependencies": ["mqtt"],
+  "codeowners": [],
+  "requirements": []
+}

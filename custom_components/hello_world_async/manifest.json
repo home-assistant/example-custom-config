@@ -1,0 +1,8 @@
+{
+  "domain": "hello_world_async",
+  "name": "Hello World (async)",
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/hello_world_async/",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}

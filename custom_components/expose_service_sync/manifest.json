@@ -1,0 +1,8 @@
+{
+  "domain": "expose_service_sync",
+  "name": "Expose Service (sync)",
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/expose_service_sync/",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}
