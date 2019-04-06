@@ -3,11 +3,11 @@ import logging
 
 import voluptuous as vol
 
-# Import the device class from the component that you want to support
-from homeassistant.components.light import ATTR_BRIGHTNESS, Light, PLATFORM_SCHEMA
-from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD
 import homeassistant.helpers.config_validation as cv
-
+# Import the device class from the component that you want to support
+from homeassistant.components.light import (
+    ATTR_BRIGHTNESS, PLATFORM_SCHEMA, Light)
+from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,14 +19,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-def setup_platform(hass, config, add_devices, discovery_info=None):
-    """Setup the Awesome Light platform."""
+def setup_platform(hass, config, add_entities, discovery_info=None):
+    """Set up the Awesome Light platform."""
     import awesomelights
 
-    # Assign configuration variables. The configuration check takes care they are
-    # present.
-    host = config.get(CONF_HOST)
-    username = config.get(CONF_USERNAME)
+    # Assign configuration variables.
+    # The configuration check takes care they are present.
+    host = config[CONF_HOST]
+    username = config[CONF_USERNAME]
     password = config.get(CONF_PASSWORD)
 
     # Setup connection with devices/cloud
@@ -38,8 +38,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         return
 
     # Add devices
-    add_devices(AwesomeLight(light) for light in hub.lights())
-
+    add_entities(AwesomeLight(light) for light in hub.lights())
 
 
 class AwesomeLight(Light):
