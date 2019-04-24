@@ -5,7 +5,7 @@ import logging
 from homeassistant.core import callback
 
 # The domain of your component. Should be equal to the name of your component.
-DOMAIN = "expose_service_sync"
+DOMAIN = "expose_service_async"
 _LOGGER = logging.getLogger(__name__)
 
 
