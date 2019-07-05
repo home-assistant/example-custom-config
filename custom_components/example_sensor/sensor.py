@@ -1,10 +1,11 @@
+"""Platform for sensor integration."""
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.helpers.entity import Entity
 
 
-def setup_platform(hass, config, add_devices, discovery_info=None):
-    """Setup the sensor platform."""
-    add_devices([ExampleSensor()])
+def setup_platform(hass, config, add_entities, discovery_info=None):
+    """Set up the sensor platform."""
+    add_entities([ExampleSensor()])
 
 
 class ExampleSensor(Entity):
