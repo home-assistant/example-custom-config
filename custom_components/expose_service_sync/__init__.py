@@ -7,7 +7,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def setup(hass, config):
-    """Setup the service example component."""
+    """Set up the sync service example component."""
     def my_service(call):
         """My first service."""
         _LOGGER.info('Received data', call.data)

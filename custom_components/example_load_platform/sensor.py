@@ -14,7 +14,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
 
 class ExampleSensor(Entity):
-    """Representation of a Sensor."""
+    """Representation of a sensor."""
 
     def __init__(self):
         """Initialize the sensor."""
