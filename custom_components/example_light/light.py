@@ -1,6 +1,7 @@
 """Platform for light integration."""
 import logging
 
+import awesomelights
 import voluptuous as vol
 
 import homeassistant.helpers.config_validation as cv
@@ -21,8 +22,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the Awesome Light platform."""
-    import awesomelights
-
     # Assign configuration variables.
     # The configuration check takes care they are present.
     host = config[CONF_HOST]
