@@ -33,7 +33,7 @@ CONFIG_SCHEMA = vol.Schema({
 
 
 def setup(hass, config):
-    """Setup the MQTT example component."""
+    """Set up the MQTT example component."""
     topic = config[DOMAIN][CONF_TOPIC]
     entity_id = 'mqtt_example.last_message'
 

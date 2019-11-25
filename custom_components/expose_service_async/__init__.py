@@ -11,7 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @asyncio.coroutine
 def async_setup(hass, config):
-    """Setup the service example component."""
+    """Set up the an async service example component."""
     @callback
     def my_service(call):
         """My first service."""
