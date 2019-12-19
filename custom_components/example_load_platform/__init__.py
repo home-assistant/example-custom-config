@@ -9,6 +9,6 @@ def setup(hass, config):
         'temperature': 23
     }
 
-    hass.helpers.discovery.load_platform('sensor', DOMAIN, {}, config)
+    hass.helpers.discovery.load_platform(hass, 'sensor', DOMAIN, {}, config)
 
     return True
