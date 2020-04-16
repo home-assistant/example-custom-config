@@ -1,0 +1,6 @@
+set_state:
+  description: Set MQTT state
+  fields:
+    new_state:
+      description: New state of the entity
+      example: "on"
