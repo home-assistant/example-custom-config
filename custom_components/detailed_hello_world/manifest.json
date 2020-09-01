@@ -1,0 +1,12 @@
+{
+  "domain": "detailed_hello_world",
+  "name": "Detailed Hello World",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/detailed_hello_world",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": ["@sillyfrog"]
+}
