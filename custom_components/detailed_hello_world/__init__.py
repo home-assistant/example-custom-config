@@ -1,9 +1,5 @@
 """The Detailed Hello World integration."""
-# TODO - async_will_remove_from_hass
-
 import asyncio
-
-import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant

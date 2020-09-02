@@ -72,9 +72,13 @@ class Roller:
         await asyncio.sleep(random.randint(1, 10))
         await self.publish_updates()
 
-    def registercallback(self, callback):
+    def register_callback(self, callback):
         """Register callback, called when Roller changes state."""
         self._callbacks.add(callback)
+
+    def remove_callback(self, callback):
+        """Remove previously registered callback."""
+        self._callbacks.discard(callback)
 
     # In a real implemntation, this library would call it's call backs when it was
     # notified of any state changeds for the relevant device.
@@ -82,7 +86,7 @@ class Roller:
         """Schedule call all registered callbacks."""
         self._current_position = self._target_position
         for callback in self._callbacks:
-            callback()  # TODO await?
+            callback()
 
     @property
     def online(self):
@@ -102,6 +106,6 @@ class Roller:
         return round(random.random() * 3 + 10, 2)
 
     @property
-    def wifi_signal(self):
-        """Return a sample WiFi signal strength in dB."""
-        return random.randint(-90, -10)
+    def illuminance(self):
+        """Return a sample illuminance in lux."""
+        return random.randint(0, 500)

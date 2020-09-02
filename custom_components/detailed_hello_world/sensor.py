@@ -10,7 +10,7 @@ import random
 from homeassistant.const import (
     DEVICE_CLASS_BATTERY,
     UNIT_PERCENTAGE,
-    DEVICE_CLASS_SIGNAL_STRENGTH,
+    DEVICE_CLASS_ILLUMINANCE,
 )
 from homeassistant.helpers.entity import Entity
 from .const import DOMAIN
@@ -19,8 +19,9 @@ from homeassistant.const import ATTR_VOLTAGE
 
 
 # See cover.py for more details.
-# Note how both entities for each roller sensor (battry and signal) are added at the
-# same time to the same list. This way only a single async_add_devices call is required.
+# Note how both entities for each roller sensor (battry and illuminance) are added at
+# the same time to the same list. This way only a single async_add_devices call is
+# required.
 async def async_setup_entry(hass, config_entry, async_add_devices):
     """Add sensors for passed config_entry in HA."""
     hub = hass.data[DOMAIN][config_entry.entry_id]
@@ -28,9 +29,9 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
     new_devices = []
     for roller in hub.rollers:
         new_devices.append(BatterySensor(roller))
-        new_devices.append(SignalSensor(roller))
-    async_add_devices(new_devices)
-    return True
+        new_devices.append(IlluminanceSensor(roller))
+    if new_devices:
+        async_add_devices(new_devices)
 
 
 # This base class shows the common properties and methods for a sensor as used in this
@@ -52,9 +53,7 @@ class SensorBase(Entity):
     @property
     def device_info(self):
         """Return information to link this entity with the correct device."""
-        return {
-            "identifiers": {(DOMAIN, self._roller.roller_id)},
-        }
+        return {"identifiers": {(DOMAIN, self._roller.roller_id)}}
 
     # This property is important to let HA know if this entity is online or not.
     # If an entity is offline (return False), the UI will refelect this.
@@ -66,7 +65,12 @@ class SensorBase(Entity):
     async def async_added_to_hass(self):
         """Run when this Entity has been added to HA."""
         # Sensors should also register callbacks to HA when their state changes
-        self._roller.registercallback(self.async_write_ha_state)
+        self._roller.register_callback(self.async_write_ha_state)
+
+    async def async_will_remove_from_hass(self):
+        """Entity being removed from hass."""
+        # The opposite of async_added_to_hass. Remove any registered call backs here.
+        self._roller.remove_callback(self.async_write_ha_state)
 
 
 class BatterySensor(SensorBase):
@@ -131,27 +135,27 @@ class BatterySensor(SensorBase):
 
 # This is another sensor, but more simple compared to the battery above. See the
 # comments above for how each field works.
-class SignalSensor(SensorBase):
+class IlluminanceSensor(SensorBase):
     """Representation of a Sensor."""
 
-    device_class = DEVICE_CLASS_SIGNAL_STRENGTH
+    device_class = DEVICE_CLASS_ILLUMINANCE
 
     @property
     def unique_id(self):
         """Return Unique ID string."""
-        return f"{self._roller.roller_id}_signal"
+        return f"{self._roller.roller_id}_illuminance"
 
     @property
     def name(self):
         """Return the name of the sensor."""
-        return f"{self._roller.name} Signal"
+        return f"{self._roller.name} Illuminance"
 
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self._roller.wifi_signal
+        return self._roller.illuminance
 
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return "dB"
+        return "lx"

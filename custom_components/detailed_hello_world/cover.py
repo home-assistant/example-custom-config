@@ -27,10 +27,9 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
     for roller in hub.rollers:
         roller_entity = HelloWorldCover(roller)
         new_devices.append(roller_entity)
-    async_add_devices(new_devices)
-
-    # Retrun True to tell HA everything went OK
-    return True
+    # If we have any new devices, add them
+    if new_devices:
+        async_add_devices(new_devices)
 
 
 # This entire class could be written to extend a base class to ensure common atributes
@@ -60,7 +59,12 @@ class HelloWorldCover(CoverEntity):
         # called where ever there are changes.
         # The call back registration is done once this entity is registered with HA
         # (rather than in the __init__)
-        self._roller.registercallback(self.async_write_ha_state)
+        self._roller.register_callback(self.async_write_ha_state)
+
+    async def async_will_remove_from_hass(self):
+        """Entity being removed from hass."""
+        # The opposite of async_added_to_hass. Remove any registered call backs here.
+        self._roller.remove_callback(self.async_write_ha_state)
 
     # A unique_id for this entity with in this domain. This means for example if you
     # have a sensor on this cover, you must ensure the value returned is unique,
@@ -109,7 +113,7 @@ class HelloWorldCover(CoverEntity):
     @property
     def name(self):
         """Return the name of the roller."""
-        return f"{self._roller.name}"
+        return self._roller.name
 
     # This property is important to let HA know if this entity is online or not.
     # If an entity is offline (return False), the UI will refelect this.
