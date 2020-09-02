@@ -15,11 +15,12 @@ class Hub:
         """Init dummy hub."""
         self._host = host
         self._hass = hass
+        self._name = host
         self._id = host.lower()
         self.rollers = [
-            Roller(f"{self._id}_1", self),
-            Roller(f"{self._id}_2", self),
-            Roller(f"{self._id}_3", self),
+            Roller(f"{self._id}_1", f"{self._name} 1", self),
+            Roller(f"{self._id}_2", f"{self._name} 2", self),
+            Roller(f"{self._id}_3", f"{self._name} 3", self),
         ]
         self.online = True
 
@@ -37,10 +38,11 @@ class Hub:
 class Roller:
     """Dummy roller (device for HA) for Hello World example."""
 
-    def __init__(self, rollerid, hub):
+    def __init__(self, rollerid, name, hub):
         """Init dummy roller."""
         self._id = rollerid
         self.hub = hub
+        self.name = name
         self._callbacks = set()
         self._loop = asyncio.get_event_loop()
         self._target_position = 100
@@ -80,7 +82,7 @@ class Roller:
         """Schedule call all registered callbacks."""
         self._current_position = self._target_position
         for callback in self._callbacks:
-            self._loop.run_in_executor(None, callback)
+            callback()  # TODO await?
 
     @property
     def online(self):

@@ -63,6 +63,11 @@ class SensorBase(Entity):
         """Return True if roller and hub is available."""
         return self._roller.online and self._roller.hub.online
 
+    async def async_added_to_hass(self):
+        """Run when this Entity has been added to HA."""
+        # Sensors should also register callbacks to HA when their state changes
+        self._roller.registercallback(self.async_write_ha_state)
+
 
 class BatterySensor(SensorBase):
     """Representation of a Sensor."""

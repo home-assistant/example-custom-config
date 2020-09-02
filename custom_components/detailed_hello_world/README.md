@@ -1,6 +1,6 @@
-# More Comprehensive async Integration Example
+# More "Level 2" Comprehensive async Integration Example
 
-This example aims to show the best practice for a more complete integration.
+This example aims to show the best practice for a more complete integration using **push** with async.
 
 It is based on a _cover_, emulating battery operated roller blinds.
 

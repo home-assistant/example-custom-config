@@ -49,11 +49,17 @@ class HelloWorldCover(CoverEntity):
 
     def __init__(self, roller):
         """Initialize the sensor."""
-        # Usual setup is done here. Importantly for a push integration, the module
-        # that will be getting updates needs to notify HA of changes. The dummy device
-        # has a registercallback method, so to this we add the
-        # 'self.async_write_ha_state' method, to be called where ever there are changes.
+        # Usual setup is done here. Callbacks are added in async_added_to_hass.
         self._roller = roller
+
+    async def async_added_to_hass(self):
+        """Run when this Entity has been added to HA."""
+        # Importantly for a push integration, the module that will be getting updates
+        # needs to notify HA of changes. The dummy device has a registercallback
+        # method, so to this we add the 'self.async_write_ha_state' method, to be
+        # called where ever there are changes.
+        # The call back registration is done once this entity is registered with HA
+        # (rather than in the __init__)
         self._roller.registercallback(self.async_write_ha_state)
 
     # A unique_id for this entity with in this domain. This means for example if you
@@ -100,11 +106,10 @@ class HelloWorldCover(CoverEntity):
     # This is the name for this *entity*, the "name" attribute from "device_info"
     # is used as the device name for device screens in the UI. This name is used on
     # entity screens, and used to build the Entity ID that's used is automations etc.
-    # A real implemntation would not use the ID for the name.
     @property
     def name(self):
-        """Return the name of the sensor."""
-        return f"{self._roller.roller_id}"
+        """Return the name of the roller."""
+        return f"{self._roller.name}"
 
     # This property is important to let HA know if this entity is online or not.
     # If an entity is offline (return False), the UI will refelect this.
