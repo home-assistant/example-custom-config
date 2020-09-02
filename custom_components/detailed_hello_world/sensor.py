@@ -126,7 +126,7 @@ class BatterySensor(SensorBase):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return f"{self._roller.roller_id} Battery"
+        return f"{self._roller.name} Battery"
 
 
 # This is another sensor, but more simple compared to the battery above. See the
@@ -144,7 +144,7 @@ class SignalSensor(SensorBase):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return f"{self._roller.roller_id} Signal"
+        return f"{self._roller.name} Signal"
 
     @property
     def state(self):
