@@ -1,4 +1,4 @@
-"""The Detailed Hello World integration."""
+"""The Detailed Hello World Push integration."""
 import asyncio
 
 from homeassistant.config_entries import ConfigEntry
@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from . import hub
 from .const import DOMAIN
 
-# List of platfroms to support. There should be a matching .py file for each,
+# List of platforms to support. There should be a matching .py file for each,
 # eg <cover.py> and <sensor.py>
 PLATFORMS = ["cover", "sensor"]
 

@@ -97,7 +97,7 @@ class BatterySensor(SensorBase):
     # returning the voltage of the battery. The actual percentage is returned in
     # the state property below. These values are displayed in the entity details
     # screen at the bottom below the history graph.
-    # A nummber of defined attributes are available, see the homeassistant.const module
+    # A number of defined attributes are available, see the homeassistant.const module
     # for constants starting with ATTR_*.
     # Again, if these values change, the async_write_ha_state method should be called.
     # in this implementation, these values are assumed to be static.

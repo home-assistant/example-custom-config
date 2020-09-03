@@ -32,9 +32,9 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
         async_add_devices(new_devices)
 
 
-# This entire class could be written to extend a base class to ensure common atributes
+# This entire class could be written to extend a base class to ensure common attributes
 # are kept identical/in sync. It's broken apart here between the Cover and Sensors to
-# be explict about what is returned, and the comments outline where the overlap is.
+# be explicit about what is returned, and the comments outline where the overlap is.
 class HelloWorldCover(CoverEntity):
     """Representation of a dummy Cover."""
 
@@ -91,7 +91,7 @@ class HelloWorldCover(CoverEntity):
     # as Firmware), model and manufacturer (displayed as <model> by <manufacturer>)
     # shown on the device info screen. The Manufacturer and model also have their
     # respective columns on the Devices overview table. Note: Many of these must be
-    # set when the device is first added, and they are not always automacially
+    # set when the device is first added, and they are not always automatically
     # refreshed by HA from it's internal cache.
     # For more information see:
     # https://developers.home-assistant.io/docs/device_registry_index/#device-properties

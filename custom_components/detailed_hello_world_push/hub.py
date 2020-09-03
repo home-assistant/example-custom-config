@@ -80,7 +80,7 @@ class Roller:
         """Remove previously registered callback."""
         self._callbacks.discard(callback)
 
-    # In a real implemntation, this library would call it's call backs when it was
+    # In a real implementation, this library would call it's call backs when it was
     # notified of any state changeds for the relevant device.
     async def publish_updates(self):
         """Schedule call all registered callbacks."""
@@ -91,7 +91,7 @@ class Roller:
     @property
     def online(self):
         """Roller is online."""
-        # The dummy roller is offline about 10% of the time. Retuns True if online,
+        # The dummy roller is offline about 10% of the time. Returns True if online,
         # False if offline.
         return random.random() > 0.1
 
