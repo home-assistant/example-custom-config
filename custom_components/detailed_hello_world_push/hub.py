@@ -11,6 +11,8 @@ import random
 class Hub:
     """Dummy hub for Hello World example."""
 
+    manufacturer = "Demonstration Corp"
+
     def __init__(self, hass, host):
         """Init dummy hub."""
         self._host = host
@@ -47,6 +49,13 @@ class Roller:
         self._loop = asyncio.get_event_loop()
         self._target_position = 100
         self._current_position = 100
+        # Reports if the roller is moving up or down.
+        # >0 is up, <0 is down. This very much just for demonstration.
+        self.moving = 0
+
+        # Some static information about this device
+        self.firmware_version = "0.0.{}".format(random.randint(1, 9))
+        self.model = "Test Device"
 
     @property
     def roller_id(self):
@@ -65,11 +74,17 @@ class Roller:
         State is announced a random number of seconds later.
         """
         self._target_position = position
+
+        # Update the moving status, and broadcast the update
+        self.moving = position - 50
+        await self.publish_updates()
+
         self._loop.create_task(self.delayed_update())
 
     async def delayed_update(self):
         """Publish updates, with a random delay to emulate interaction with device."""
         await asyncio.sleep(random.randint(1, 10))
+        self.moving = 0
         await self.publish_updates()
 
     def register_callback(self, callback):

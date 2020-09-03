@@ -102,9 +102,9 @@ class HelloWorldCover(CoverEntity):
             "identifiers": {(DOMAIN, self._roller.roller_id)},
             # If desired, the name for the device could be different to the entity
             "name": self.name,
-            "sw_version": "v0.0.1",
-            "model": "Test Device",
-            "manufacturer": "Demonstration Corp",
+            "sw_version": self._roller.firmware_version,
+            "model": self._roller.model,
+            "manufacturer": self._roller.hub.manufacturer,
         }
 
     # This is the name for this *entity*, the "name" attribute from "device_info"
@@ -137,13 +137,18 @@ class HelloWorldCover(CoverEntity):
 
     @property
     def is_closed(self):
-        """Close the cover, same as position 0."""
+        """Return if the cover is closed, same as position 0."""
         return self._roller.position == 0
 
     @property
-    def is_open(self):
-        """Open the cover, same as position 100."""
-        return self._roller.position == 100
+    def is_closing(self):
+        """Return if the cover is closing or not."""
+        return self._roller.moving < 0
+
+    @property
+    def is_opening(self):
+        """Return if the cover is opening or not."""
+        return self._roller.moving > 0
 
     # These methods allow HA to tell the actual device what to do. In this case, move
     # the cover to the desired position, or open and close it all the way.
