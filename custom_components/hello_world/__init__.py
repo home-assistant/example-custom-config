@@ -5,7 +5,7 @@ This component implements the bare minimum that a component should implement.
 
 Configuration:
 
-To use the hello_word component you will need to add the following to your
+To use the hello_world component you will need to add the following to your
 configuration.yaml file.
 
 hello_world:
