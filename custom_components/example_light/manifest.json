@@ -4,5 +4,6 @@
   "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/example_light/",
   "dependencies": [],
   "codeowners": [],
-  "requirements": ["awesomelights==1.2.3"]
+  "requirements": ["awesomelights==1.2.3"],
+  "version": "0.1.0"
 }
