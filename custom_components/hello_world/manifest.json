@@ -4,5 +4,6 @@
   "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/hello_world/",
   "dependencies": [],
   "codeowners": [],
-  "requirements": []
+  "requirements": [],
+  "version": "0.1.0"
 }
