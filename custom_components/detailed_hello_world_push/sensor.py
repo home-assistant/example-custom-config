@@ -9,7 +9,7 @@ import random
 
 from homeassistant.const import (
     DEVICE_CLASS_BATTERY,
-    UNIT_PERCENTAGE,
+    PERCENTAGE,
     DEVICE_CLASS_ILLUMINANCE,
 )
 from homeassistant.helpers.entity import Entity
@@ -118,13 +118,13 @@ class BatterySensor(SensorBase):
         return self._roller.battery_level
 
     # The unit of measurement for this entity. As it's a DEVICE_CLASS_BATTERY, this
-    # should be UNIT_PERCENTAGE. A number of units are supported by HA, for some
+    # should be PERCENTAGE. A number of units are supported by HA, for some
     # examples, see:
     # https://developers.home-assistant.io/docs/core/entity/sensor#available-device-classes
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return UNIT_PERCENTAGE
+        return PERCENTAGE
 
     # The same of this entity, as displayed in the entity UI.
     @property
