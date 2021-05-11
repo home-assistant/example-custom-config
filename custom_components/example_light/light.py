@@ -7,7 +7,7 @@ import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 # Import the device class from the component that you want to support
 from homeassistant.components.light import (
-    ATTR_BRIGHTNESS, PLATFORM_SCHEMA, Light)
+    ATTR_BRIGHTNESS, PLATFORM_SCHEMA, LightEntity)
 from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     add_entities(AwesomeLight(light) for light in hub.lights())
 
 
-class AwesomeLight(Light):
+class AwesomeLight(LightEntity):
     """Representation of an Awesome Light."""
 
     def __init__(self, light):
