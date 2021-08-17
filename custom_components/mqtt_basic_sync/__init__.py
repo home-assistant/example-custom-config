@@ -27,9 +27,19 @@ CONF_TOPIC = 'topic'
 DEFAULT_TOPIC = 'home-assistant/mqtt_example'
 
 # Schema to validate the configured MQTT topic
-CONFIG_SCHEMA = vol.Schema({
-    vol.Optional(CONF_TOPIC, default=DEFAULT_TOPIC): mqtt.valid_subscribe_topic
-})
+CONFIG_SCHEMA = vol.Schema(
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Required(
+                    CONF_TOPIC, default=DEFAULT_TOPIC
+                ): mqtt.valid_subscribe_topic
+            }
+        )
+    },
+    extra=vol.ALLOW_EXTRA,
+)
+
 
 
 def setup(hass, config):
