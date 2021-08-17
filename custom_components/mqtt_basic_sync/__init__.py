@@ -31,7 +31,7 @@ CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
             {
-                vol.Required(
+                vol.Optional(
                     CONF_TOPIC, default=DEFAULT_TOPIC
                 ): mqtt.valid_subscribe_topic
             }
