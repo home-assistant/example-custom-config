@@ -1,13 +1,14 @@
 """Platform for light integration."""
+from __future__ import annotations
+
 import logging
 
 import awesomelights
-import voluptuous as vol
-
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
 # Import the device class from the component that you want to support
-from homeassistant.components.light import (
-    ATTR_BRIGHTNESS, PLATFORM_SCHEMA, LightEntity)
+from homeassistant.components.light import (ATTR_BRIGHTNESS, PLATFORM_SCHEMA,
+                                            LightEntity)
 from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
 
 _LOGGER = logging.getLogger(__name__)
@@ -20,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
+def setup_platform(hass, config, add_entities, discovery_info=None) -> None:
     """Set up the Awesome Light platform."""
     # Assign configuration variables.
     # The configuration check takes care they are present.
@@ -43,7 +44,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class AwesomeLight(LightEntity):
     """Representation of an Awesome Light."""
 
-    def __init__(self, light):
+    def __init__(self, light) -> None:
         """Initialize an AwesomeLight."""
         self._light = light
         self._name = light.name
@@ -51,7 +52,7 @@ class AwesomeLight(LightEntity):
         self._brightness = None
 
     @property
-    def name(self):
+    def name(self) -> str:
         """Return the display name of this light."""
         return self._name
 
@@ -65,11 +66,11 @@ class AwesomeLight(LightEntity):
         return self._brightness
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool | None:
         """Return true if light is on."""
         return self._state
 
-    def turn_on(self, **kwargs):
+    def turn_on(self, **kwargs) -> None:
         """Instruct the light to turn on.
 
         You can skip the brightness part if your light does not support
@@ -78,11 +79,11 @@ class AwesomeLight(LightEntity):
         self._light.brightness = kwargs.get(ATTR_BRIGHTNESS, 255)
         self._light.turn_on()
 
-    def turn_off(self, **kwargs):
+    def turn_off(self, **kwargs) -> None:
         """Instruct the light to turn off."""
         self._light.turn_off()
 
-    def update(self):
+    def update(self) -> None:
         """Fetch new state data for this light.
 
         This is the only method that should fetch new data for Home Assistant.

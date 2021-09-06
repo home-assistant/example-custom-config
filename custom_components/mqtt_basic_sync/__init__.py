@@ -16,9 +16,10 @@ configuration.yaml file.
 mqtt_basic:
   topic: "home-assistant/mqtt_example"
 """
-from homeassistant.components import mqtt
+from __future__ import annotations
 
 import voluptuous as vol
+from homeassistant.components import mqtt
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "mqtt_basic"
@@ -42,13 +43,13 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 
-def setup(hass, config):
+def setup(hass, config) -> bool:
     """Set up the MQTT example component."""
     topic = config[DOMAIN][CONF_TOPIC]
     entity_id = 'mqtt_example.last_message'
 
     # Listen to a message on MQTT.
-    def message_received(topic, payload, qos):
+    def message_received(topic, payload, qos) -> None:
         """A new MQTT message has been received."""
         hass.states.set(entity_id, payload)
 
@@ -57,7 +58,7 @@ def setup(hass, config):
     hass.states.set(entity_id, 'No messages')
 
     # Service to publish a message on MQTT.
-    def set_state_service(call):
+    def set_state_service(call) -> None:
         """Service to send a message."""
         hass.components.mqtt.publish(topic, call.data.get('new_state'))
 

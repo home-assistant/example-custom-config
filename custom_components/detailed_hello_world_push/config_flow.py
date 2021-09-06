@@ -1,8 +1,9 @@
 """Config flow for Hello World integration."""
+from __future__ import annotations
+
 import logging
 
 import voluptuous as vol
-
 from homeassistant import config_entries, core, exceptions
 
 from .const import DOMAIN  # pylint:disable=unused-import
@@ -24,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({("host"): str})
 
 
-async def validate_input(hass: core.HomeAssistant, data: dict):
+async def validate_input(hass: core.HomeAssistant, data: dict) -> dict:
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.

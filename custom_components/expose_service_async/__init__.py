@@ -1,4 +1,6 @@
 """Example of a custom component exposing a service."""
+from __future__ import annotations
+
 import asyncio
 import logging
 
@@ -10,10 +12,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @asyncio.coroutine
-def async_setup(hass, config):
+def async_setup(hass, config) -> bool:
     """Set up the an async service example component."""
     @callback
-    def my_service(call):
+    def my_service(call) -> None:
         """My first service."""
         _LOGGER.info('Received data', call.data)
 

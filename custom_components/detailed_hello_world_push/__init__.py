@@ -1,4 +1,6 @@
 """The Detailed Hello World Push integration."""
+from __future__ import annotations
+
 import asyncio
 
 from homeassistant.config_entries import ConfigEntry
@@ -38,7 +40,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     # This is called when an entry/configured device is to be removed. The class
     # needs to unload itself, and remove callbacks. See the classes for further

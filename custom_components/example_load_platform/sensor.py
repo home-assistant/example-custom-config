@@ -1,11 +1,13 @@
 """Platform for sensor integration."""
+from __future__ import annotations
+
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.helpers.entity import Entity
 
 from . import DOMAIN
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
+def setup_platform(hass, config, add_entities, discovery_info=None) -> None:
     """Set up the sensor platform."""
     # We only want this platform to be set up via discovery.
     if discovery_info is None:
@@ -16,12 +18,12 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class ExampleSensor(Entity):
     """Representation of a sensor."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the sensor."""
         self._state = None
 
     @property
-    def name(self):
+    def name(self) -> str:
         """Return the name of the sensor."""
         return 'Example Temperature'
 
@@ -31,11 +33,11 @@ class ExampleSensor(Entity):
         return self._state
 
     @property
-    def unit_of_measurement(self):
+    def unit_of_measurement(self) -> str:
         """Return the unit of measurement."""
         return TEMP_CELSIUS
 
-    def update(self):
+    def update(self) -> None:
         """Fetch new state data for the sensor.
 
         This is the only method that should fetch new data for Home Assistant.
