@@ -18,8 +18,11 @@ mqtt_basic:
 """
 from __future__ import annotations
 
+from typing import Any
+
 import voluptuous as vol
 from homeassistant.components import mqtt
+from homeassistant.core import HomeAssistant
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "mqtt_basic"
@@ -43,7 +46,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 
-def setup(hass, config) -> bool:
+def setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     """Set up the MQTT example component."""
     topic = config[DOMAIN][CONF_TOPIC]
     entity_id = 'mqtt_example.last_message'

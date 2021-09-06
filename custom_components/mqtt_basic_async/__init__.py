@@ -18,9 +18,11 @@ mqtt_basic_async:
 """
 from __future__ import annotations
 
+from typing import Any
+
 import voluptuous as vol
 from homeassistant.components import mqtt
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "mqtt_basic_async"
@@ -34,7 +36,7 @@ CONFIG_SCHEMA = vol.Schema({
 })
 
 
-async def async_setup(hass, config) -> bool:
+async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     """Set up the MQTT async example component."""
     topic = config[DOMAIN][CONF_TOPIC]
     entity_id = 'mqtt_example.last_message'

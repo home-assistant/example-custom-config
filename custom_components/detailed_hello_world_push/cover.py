@@ -1,6 +1,8 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 
+from typing import Any
+
 # These constants are relevant to the type of entity we are using.
 # See below for how they are used.
 from homeassistant.components.cover import (ATTR_POSITION, SUPPORT_CLOSE,
@@ -94,7 +96,7 @@ class HelloWorldCover(CoverEntity):
     # For more information see:
     # https://developers.home-assistant.io/docs/device_registry_index/#device-properties
     @property
-    def device_info(self) -> dict:
+    def device_info(self) -> dict[str, Any]:
         """Information about this entity/device."""
         return {
             "identifiers": {(DOMAIN, self._roller.roller_id)},

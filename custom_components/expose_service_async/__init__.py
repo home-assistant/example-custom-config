@@ -3,8 +3,9 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from typing import Any
 
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "expose_service_async"
@@ -12,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @asyncio.coroutine
-def async_setup(hass, config) -> bool:
+def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     """Set up the an async service example component."""
     @callback
     def my_service(call) -> None:
