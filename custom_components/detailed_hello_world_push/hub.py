@@ -1,4 +1,6 @@
 """A demonstration 'hub' that connects several devices."""
+from __future__ import annotations
+
 # In a real implementation, this would be in an external library that's on PyPI.
 # The PyPI package needs to be included in the `requirements` section of manifest.json
 # See https://developers.home-assistant.io/docs/creating_integration_manifest
