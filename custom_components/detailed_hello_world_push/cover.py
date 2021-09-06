@@ -5,9 +5,13 @@ from typing import Any
 
 # These constants are relevant to the type of entity we are using.
 # See below for how they are used.
-from homeassistant.components.cover import (ATTR_POSITION, SUPPORT_CLOSE,
-                                            SUPPORT_OPEN, SUPPORT_SET_POSITION,
-                                            CoverEntity)
+from homeassistant.components.cover import (
+    ATTR_POSITION,
+    SUPPORT_CLOSE,
+    SUPPORT_OPEN,
+    SUPPORT_SET_POSITION,
+    CoverEntity,
+)
 
 from .const import DOMAIN
 
