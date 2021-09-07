@@ -18,7 +18,7 @@ def setup_platform(
     add_entities([ExampleSensor()])
 
 
-class ExampleSensor(Entity):
+class ExampleSensor(SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self):

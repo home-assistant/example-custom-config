@@ -5,7 +5,8 @@ import logging
 from typing import Any
 
 import voluptuous as vol
-from homeassistant import config_entries, core, exceptions
+from homeassistant import config_entries, exceptions
+from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN  # pylint:disable=unused-import
 from .hub import Hub
@@ -26,7 +27,7 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({("host"): str})
 
 
-async def validate_input(hass: core.HomeAssistant, data: dict) -> dict[str, Any]:
+async def validate_input(hass: HomeAssistant, data: dict) -> dict[str, Any]:
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
