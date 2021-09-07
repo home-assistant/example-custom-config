@@ -15,7 +15,7 @@ class Hub:
 
     manufacturer = "Demonstration Corp"
 
-    def __init__(self, hass, host) -> None:
+    def __init__(self, hass: HomeAssistant, host: str) -> None:
         """Init dummy hub."""
         self._host = host
         self._hass = hass
@@ -42,7 +42,7 @@ class Hub:
 class Roller:
     """Dummy roller (device for HA) for Hello World example."""
 
-    def __init__(self, rollerid, name, hub) -> None:
+    def __init__(self, rollerid: str, name: str, hub: Hub) -> None:
         """Init dummy roller."""
         self._id = rollerid
         self.hub = hub
@@ -69,7 +69,7 @@ class Roller:
         """Return position for roller."""
         return self._current_position
 
-    async def set_position(self, position) -> None:
+    async def set_position(self, position: int) -> None:
         """
         Set dummy cover to the given position.
 
@@ -89,11 +89,11 @@ class Roller:
         self.moving = 0
         await self.publish_updates()
 
-    def register_callback(self, callback) -> None:
+    def register_callback(self, callback: Callable[[], None]) -> None:
         """Register callback, called when Roller changes state."""
         self._callbacks.add(callback)
 
-    def remove_callback(self, callback) -> None:
+    def remove_callback(self, callback: Callable[[], None]) -> None:
         """Remove previously registered callback."""
         self._callbacks.discard(callback)
 

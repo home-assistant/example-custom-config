@@ -4,16 +4,17 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.helpers.typing import ConfigType
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "expose_service_sync"
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
+def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the sync service example component."""
-    def my_service(call) -> None:
+    def my_service(call: ServiceCall) -> None:
         """My first service."""
         _LOGGER.info('Received data', call.data)
 

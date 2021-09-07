@@ -18,7 +18,11 @@ from .const import DOMAIN
 
 # This function is called as part of the __init__.async_setup_entry (via the
 # hass.config_entries.async_forward_entry_setup call)
-async def async_setup_entry(hass, config_entry, async_add_devices) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback
+) -> None:
     """Add cover for passed config_entry in HA."""
     # The hub is loaded from the associated hass.data entry that was created in the
     # __init__.async_setup_entry function
@@ -100,7 +104,7 @@ class HelloWorldCover(CoverEntity):
     # For more information see:
     # https://developers.home-assistant.io/docs/device_registry_index/#device-properties
     @property
-    def device_info(self) -> dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Information about this entity/device."""
         return {
             "identifiers": {(DOMAIN, self._roller.roller_id)},
@@ -156,14 +160,14 @@ class HelloWorldCover(CoverEntity):
 
     # These methods allow HA to tell the actual device what to do. In this case, move
     # the cover to the desired position, or open and close it all the way.
-    async def async_open_cover(self, **kwargs) -> None:
+    async def async_open_cover(self, **kwargs: Any) -> None:
         """Open the cover."""
         await self._roller.set_position(100)
 
-    async def async_close_cover(self, **kwargs) -> None:
+    async def async_close_cover(self, **kwargs: Any) -> None:
         """Close the cover."""
         await self._roller.set_position(0)
 
-    async def async_set_cover_position(self, **kwargs) -> None:
+    async def async_set_cover_position(self, **kwargs: Any) -> None:
         """Close the cover."""
         await self._roller.set_position(kwargs[ATTR_POSITION])

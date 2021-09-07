@@ -4,8 +4,17 @@ from __future__ import annotations
 import logging
 
 import awesomelights
-import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+
+# Import the device class from the component that you want to support
+from homeassistant.components.light import (
+    ATTR_BRIGHTNESS, PLATFORM_SCHEMA, LightEntity
+)
+from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
+from homeassistant.core import HomeAssistant
+import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 # Import the device class from the component that you want to support
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS, PLATFORM_SCHEMA, LightEntity)
@@ -21,7 +30,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None) -> None:
+def setup_platform(
+    hass: HomeAssistant,
+    config: ConfigType,
+    add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None
+) -> None:
     """Set up the Awesome Light platform."""
     # Assign configuration variables.
     # The configuration check takes care they are present.
@@ -70,7 +84,7 @@ class AwesomeLight(LightEntity):
         """Return true if light is on."""
         return self._state
 
-    def turn_on(self, **kwargs) -> None:
+    def turn_on(self, **kwargs: Any) -> None:
         """Instruct the light to turn on.
 
         You can skip the brightness part if your light does not support
@@ -79,7 +93,7 @@ class AwesomeLight(LightEntity):
         self._light.brightness = kwargs.get(ATTR_BRIGHTNESS, 255)
         self._light.turn_on()
 
-    def turn_off(self, **kwargs) -> None:
+    def turn_off(self, **kwargs: Any) -> None:
         """Instruct the light to turn off."""
         self._light.turn_off()
 

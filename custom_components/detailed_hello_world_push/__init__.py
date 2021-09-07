@@ -6,6 +6,7 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.typing import ConfigType
 
 from . import hub
 from .const import DOMAIN
@@ -15,7 +16,7 @@ from .const import DOMAIN
 PLATFORMS: list[str] = ["cover", "sensor"]
 
 
-async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the Hello World component."""
     # Ensure our name space for storing objects is a known type. A dict is
     # common/preferred as it allows a separate instance of your class for each

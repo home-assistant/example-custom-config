@@ -22,7 +22,8 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant.components import mqtt
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import HomeAssistant, ServiceCall, callback
+from homeassistant.helpers.typing import ConfigType
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "mqtt_basic_async"
@@ -36,14 +37,14 @@ CONFIG_SCHEMA = vol.Schema({
 })
 
 
-async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the MQTT async example component."""
     topic = config[DOMAIN][CONF_TOPIC]
     entity_id = 'mqtt_example.last_message'
 
     # Listen to a message on MQTT.
     @callback
-    def message_received(topic, payload, qos) -> None:
+    def message_received(topic: str, payload: str, qos: int) -> None:
         """A new MQTT message has been received."""
         hass.states.async_set(entity_id, payload)
 
@@ -53,7 +54,7 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
 
     # Service to publish a message on MQTT.
     @callback
-    def set_state_service(call) -> None:
+    def set_state_service(call: ServiceCall) -> None:
         """Service to send a message."""
         hass.components.mqtt.async_publish(topic, call.data.get('new_state'))
 

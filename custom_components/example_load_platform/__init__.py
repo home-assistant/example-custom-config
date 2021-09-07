@@ -4,11 +4,12 @@ from __future__ import annotations
 from typing import Any
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.typing import ConfigType
 
 DOMAIN = 'example_load_platform'
 
 
-def setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
+def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Your controller/hub specific code."""
     # Data that you want to share with your platforms
     hass.data[DOMAIN] = {
