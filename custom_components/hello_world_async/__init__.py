@@ -13,7 +13,6 @@ hello_world_async:
 from __future__ import annotations
 
 import asyncio
-from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType

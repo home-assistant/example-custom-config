@@ -1,9 +1,7 @@
 """Example of a custom component exposing a service."""
 from __future__ import annotations
 
-import asyncio
 import logging
-from typing import Any
 
 from homeassistant.core import HomeAssistant, ServiceCall, callback
 from homeassistant.helpers.typing import ConfigType

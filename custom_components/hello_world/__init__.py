@@ -12,8 +12,6 @@ hello_world:
 """
 from __future__ import annotations
 
-from typing import Any
-
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType
 
