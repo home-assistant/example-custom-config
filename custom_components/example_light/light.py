@@ -5,6 +5,7 @@ import logging
 
 import awesomelights
 import voluptuous as vol
+
 # Import the device class from the component that you want to support
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.light import (ATTR_BRIGHTNESS, PLATFORM_SCHEMA,
