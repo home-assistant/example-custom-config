@@ -19,6 +19,7 @@ mqtt_basic_async:
 from __future__ import annotations
 
 import voluptuous as vol
+
 from homeassistant.components import mqtt
 from homeassistant.core import HomeAssistant, ServiceCall, callback
 from homeassistant.helpers.typing import ConfigType
