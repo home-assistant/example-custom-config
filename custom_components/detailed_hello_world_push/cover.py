@@ -1,20 +1,27 @@
 """Platform for sensor integration."""
+from __future__ import annotations
+
+from typing import Any
+
 # These constants are relevant to the type of entity we are using.
 # See below for how they are used.
-from homeassistant.components.cover import (
-    ATTR_POSITION,
-    SUPPORT_CLOSE,
-    SUPPORT_OPEN,
-    SUPPORT_SET_POSITION,
-    CoverEntity,
-)
+from homeassistant.components.cover import (ATTR_POSITION, SUPPORT_CLOSE,
+                                            SUPPORT_OPEN, SUPPORT_SET_POSITION,
+                                            CoverEntity)
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 
 
 # This function is called as part of the __init__.async_setup_entry (via the
 # hass.config_entries.async_forward_entry_setup call)
-async def async_setup_entry(hass, config_entry, async_add_devices):
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback
+) -> None:
     """Add cover for passed config_entry in HA."""
     # The hub is loaded from the associated hass.data entry that was created in the
     # __init__.async_setup_entry function
@@ -46,12 +53,12 @@ class HelloWorldCover(CoverEntity):
     # device it connected to), then this should be function with an @property decorator.
     supported_features = SUPPORT_SET_POSITION | SUPPORT_OPEN | SUPPORT_CLOSE
 
-    def __init__(self, roller):
+    def __init__(self, roller) -> None:
         """Initialize the sensor."""
         # Usual setup is done here. Callbacks are added in async_added_to_hass.
         self._roller = roller
 
-    async def async_added_to_hass(self):
+    async def async_added_to_hass(self) -> None:
         """Run when this Entity has been added to HA."""
         # Importantly for a push integration, the module that will be getting updates
         # needs to notify HA of changes. The dummy device has a registercallback
@@ -61,7 +68,7 @@ class HelloWorldCover(CoverEntity):
         # (rather than in the __init__)
         self._roller.register_callback(self.async_write_ha_state)
 
-    async def async_will_remove_from_hass(self):
+    async def async_will_remove_from_hass(self) -> None:
         """Entity being removed from hass."""
         # The opposite of async_added_to_hass. Remove any registered call backs here.
         self._roller.remove_callback(self.async_write_ha_state)
@@ -72,7 +79,7 @@ class HelloWorldCover(CoverEntity):
     # https://developers.home-assistant.io/docs/entity_registry_index/#unique-id-requirements
     # Note: This is NOT used to generate the user visible Entity ID used in automations.
     @property
-    def unique_id(self):
+    def unique_id(self) -> str:
         """Return Unique ID string."""
         return f"{self._roller.roller_id}_cover"
 
@@ -96,7 +103,7 @@ class HelloWorldCover(CoverEntity):
     # For more information see:
     # https://developers.home-assistant.io/docs/device_registry_index/#device-properties
     @property
-    def device_info(self):
+    def device_info(self) -> DeviceInfo:
         """Information about this entity/device."""
         return {
             "identifiers": {(DOMAIN, self._roller.roller_id)},
@@ -111,7 +118,7 @@ class HelloWorldCover(CoverEntity):
     # is used as the device name for device screens in the UI. This name is used on
     # entity screens, and used to build the Entity ID that's used is automations etc.
     @property
-    def name(self):
+    def name(self) -> str:
         """Return the name of the roller."""
         return self._roller.name
 
@@ -136,30 +143,30 @@ class HelloWorldCover(CoverEntity):
         return self._roller.position
 
     @property
-    def is_closed(self):
+    def is_closed(self) -> bool:
         """Return if the cover is closed, same as position 0."""
         return self._roller.position == 0
 
     @property
-    def is_closing(self):
+    def is_closing(self) -> bool:
         """Return if the cover is closing or not."""
         return self._roller.moving < 0
 
     @property
-    def is_opening(self):
+    def is_opening(self) -> bool:
         """Return if the cover is opening or not."""
         return self._roller.moving > 0
 
     # These methods allow HA to tell the actual device what to do. In this case, move
     # the cover to the desired position, or open and close it all the way.
-    async def async_open_cover(self, **kwargs):
+    async def async_open_cover(self, **kwargs: Any) -> None:
         """Open the cover."""
         await self._roller.set_position(100)
 
-    async def async_close_cover(self, **kwargs):
+    async def async_close_cover(self, **kwargs: Any) -> None:
         """Close the cover."""
         await self._roller.set_position(0)
 
-    async def async_set_cover_position(self, **kwargs):
+    async def async_set_cover_position(self, **kwargs: Any) -> None:
         """Close the cover."""
         await self._roller.set_position(kwargs[ATTR_POSITION])
