@@ -22,7 +22,7 @@ from .const import DOMAIN
 # Note how both entities for each roller sensor (battry and illuminance) are added at
 # the same time to the same list. This way only a single async_add_devices call is
 # required.
-async def async_setup_entry(hass, config_entry, async_add_devices):
+async def async_setup_entry(hass, config_entry, async_add_entities):
     """Add sensors for passed config_entry in HA."""
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
@@ -31,7 +31,7 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
         new_devices.append(BatterySensor(roller))
         new_devices.append(IlluminanceSensor(roller))
     if new_devices:
-        async_add_devices(new_devices)
+        async_add_entities(new_devices)
 
 
 # This base class shows the common properties and methods for a sensor as used in this
