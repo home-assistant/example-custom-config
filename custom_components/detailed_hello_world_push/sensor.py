@@ -8,21 +8,21 @@
 import random
 
 from homeassistant.const import (
+    ATTR_VOLTAGE,
     DEVICE_CLASS_BATTERY,
-    PERCENTAGE,
     DEVICE_CLASS_ILLUMINANCE,
+    PERCENTAGE,
 )
 from homeassistant.helpers.entity import Entity
-from .const import DOMAIN
 
-from homeassistant.const import ATTR_VOLTAGE
+from .const import DOMAIN
 
 
 # See cover.py for more details.
 # Note how both entities for each roller sensor (battry and illuminance) are added at
 # the same time to the same list. This way only a single async_add_devices call is
 # required.
-async def async_setup_entry(hass, config_entry, async_add_devices):
+async def async_setup_entry(hass, config_entry, async_add_entities):
     """Add sensors for passed config_entry in HA."""
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
@@ -31,7 +31,7 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
         new_devices.append(BatterySensor(roller))
         new_devices.append(IlluminanceSensor(roller))
     if new_devices:
-        async_add_devices(new_devices)
+        async_add_entities(new_devices)
 
 
 # This base class shows the common properties and methods for a sensor as used in this
@@ -81,34 +81,24 @@ class BatterySensor(SensorBase):
     # https://developers.home-assistant.io/docs/core/entity/sensor
     device_class = DEVICE_CLASS_BATTERY
 
+    # The unit of measurement for this entity. As it's a DEVICE_CLASS_BATTERY, this
+    # should be PERCENTAGE. A number of units are supported by HA, for some
+    # examples, see:
+    # https://developers.home-assistant.io/docs/core/entity/sensor#available-device-classes
+    _attr_unit_of_measurement = PERCENTAGE
+
     def __init__(self, roller):
         """Initialize the sensor."""
         super().__init__(roller)
+
+        # As per the sensor, this must be a unique value within this domain. This is done
+        # by using the device ID, and appending "_battery"
+        self._attr_unique_id = f"{self._roller.roller_id}_battery"
+
+        # The name of the entity
+        self._attr_name = f"{self._roller.name} Battery"
+
         self._state = random.randint(0, 100)
-
-    # As per the sensor, this must be a unique value within this domain. This is done
-    # by using the device ID, and appending "_battery"
-    @property
-    def unique_id(self):
-        """Return Unique ID string."""
-        return f"{self._roller.roller_id}_battery"
-
-    # This property can return additional metadata about this device. Here it's
-    # returning the voltage of the battery. The actual percentage is returned in
-    # the state property below. These values are displayed in the entity details
-    # screen at the bottom below the history graph.
-    # A number of defined attributes are available, see the homeassistant.const module
-    # for constants starting with ATTR_*.
-    # Again, if these values change, the async_write_ha_state method should be called.
-    # in this implementation, these values are assumed to be static.
-    # Note this functionality to display addition data on an entity appears to be
-    # exclusive to sensors. This information is not shown in the UI for a cover.
-    @property
-    def device_state_attributes(self):
-        """Return the state attributes of the device."""
-        attr = {}
-        attr[ATTR_VOLTAGE] = self._roller.battery_voltage
-        return attr
 
     # The value of this sensor. As this is a DEVICE_CLASS_BATTERY, this value must be
     # the battery level as a percentage (between 0 and 100)
@@ -117,21 +107,6 @@ class BatterySensor(SensorBase):
         """Return the state of the sensor."""
         return self._roller.battery_level
 
-    # The unit of measurement for this entity. As it's a DEVICE_CLASS_BATTERY, this
-    # should be PERCENTAGE. A number of units are supported by HA, for some
-    # examples, see:
-    # https://developers.home-assistant.io/docs/core/entity/sensor#available-device-classes
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-        return PERCENTAGE
-
-    # The same of this entity, as displayed in the entity UI.
-    @property
-    def name(self):
-        """Return the name of the sensor."""
-        return f"{self._roller.name} Battery"
-
 
 # This is another sensor, but more simple compared to the battery above. See the
 # comments above for how each field works.
@@ -139,23 +114,19 @@ class IlluminanceSensor(SensorBase):
     """Representation of a Sensor."""
 
     device_class = DEVICE_CLASS_ILLUMINANCE
+    _attr_unit_of_measurement = "lx"
 
-    @property
-    def unique_id(self):
-        """Return Unique ID string."""
-        return f"{self._roller.roller_id}_illuminance"
+    def __init__(self, roller):
+        """Initialize the sensor."""
+        super().__init__(roller)
+        # As per the sensor, this must be a unique value within this domain. This is done
+        # by using the device ID, and appending "_battery"
+        self._attr_unique_id = f"{self._roller.roller_id}_illuminance"
 
-    @property
-    def name(self):
-        """Return the name of the sensor."""
-        return f"{self._roller.name} Illuminance"
+        # The name of the entity
+        self._attr_name = f"{self._roller.name} Illuminance"
 
     @property
     def state(self):
         """Return the state of the sensor."""
         return self._roller.illuminance
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-        return "lx"

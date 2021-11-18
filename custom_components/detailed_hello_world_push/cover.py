@@ -5,9 +5,13 @@ from typing import Any
 
 # These constants are relevant to the type of entity we are using.
 # See below for how they are used.
-from homeassistant.components.cover import (ATTR_POSITION, SUPPORT_CLOSE,
-                                            SUPPORT_OPEN, SUPPORT_SET_POSITION,
-                                            CoverEntity)
+from homeassistant.components.cover import (
+    ATTR_POSITION,
+    SUPPORT_CLOSE,
+    SUPPORT_OPEN,
+    SUPPORT_SET_POSITION,
+    CoverEntity,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -20,23 +24,15 @@ from .const import DOMAIN
 async def async_setup_entry(
     hass: HomeAssistant,
     config_entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Add cover for passed config_entry in HA."""
     # The hub is loaded from the associated hass.data entry that was created in the
     # __init__.async_setup_entry function
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
-    # The next few lines find all of the entities that will need to be added
-    # to HA. Note these are all added to a list, so async_add_devices can be
-    # called just once.
-    new_devices = []
-    for roller in hub.rollers:
-        roller_entity = HelloWorldCover(roller)
-        new_devices.append(roller_entity)
-    # If we have any new devices, add them
-    if new_devices:
-        async_add_devices(new_devices)
+    # Add all entities to HA
+    async_add_entities(HelloWorldCover(roller) for roller in hub.rollers)
 
 
 # This entire class could be written to extend a base class to ensure common attributes
@@ -58,6 +54,18 @@ class HelloWorldCover(CoverEntity):
         # Usual setup is done here. Callbacks are added in async_added_to_hass.
         self._roller = roller
 
+        # A unique_id for this entity with in this domain. This means for example if you
+        # have a sensor on this cover, you must ensure the value returned is unique,
+        # which is done here by appending "_cover". For more information, see:
+        # https://developers.home-assistant.io/docs/entity_registry_index/#unique-id-requirements
+        # Note: This is NOT used to generate the user visible Entity ID used in automations.
+        self._attr_unique_id = f"{self._roller.roller_id}_cover"
+
+        # This is the name for this *entity*, the "name" attribute from "device_info"
+        # is used as the device name for device screens in the UI. This name is used on
+        # entity screens, and used to build the Entity ID that's used is automations etc.
+        self._attr_name = self._roller.name
+
     async def async_added_to_hass(self) -> None:
         """Run when this Entity has been added to HA."""
         # Importantly for a push integration, the module that will be getting updates
@@ -72,16 +80,6 @@ class HelloWorldCover(CoverEntity):
         """Entity being removed from hass."""
         # The opposite of async_added_to_hass. Remove any registered call backs here.
         self._roller.remove_callback(self.async_write_ha_state)
-
-    # A unique_id for this entity with in this domain. This means for example if you
-    # have a sensor on this cover, you must ensure the value returned is unique,
-    # which is done here by appending "_cover". For more information, see:
-    # https://developers.home-assistant.io/docs/entity_registry_index/#unique-id-requirements
-    # Note: This is NOT used to generate the user visible Entity ID used in automations.
-    @property
-    def unique_id(self) -> str:
-        """Return Unique ID string."""
-        return f"{self._roller.roller_id}_cover"
 
     # Information about the devices that is partially visible in the UI.
     # The most critical thing here is to give this entity a name so it is displayed
@@ -114,14 +112,6 @@ class HelloWorldCover(CoverEntity):
             "manufacturer": self._roller.hub.manufacturer,
         }
 
-    # This is the name for this *entity*, the "name" attribute from "device_info"
-    # is used as the device name for device screens in the UI. This name is used on
-    # entity screens, and used to build the Entity ID that's used is automations etc.
-    @property
-    def name(self) -> str:
-        """Return the name of the roller."""
-        return self._roller.name
-
     # This property is important to let HA know if this entity is online or not.
     # If an entity is offline (return False), the UI will refelect this.
     @property
@@ -129,7 +119,7 @@ class HelloWorldCover(CoverEntity):
         """Return True if roller and hub is available."""
         return self._roller.online and self._roller.hub.online
 
-    # The follwing properties are how HA knows the current state of the device.
+    # The following properties are how HA knows the current state of the device.
     # These must return a value from memory, not make a live query to the device/hub
     # etc when called (hence they are properties). For a push based integration,
     # HA is notified of changes via the async_write_ha_state call. See the __init__
