@@ -100,21 +100,6 @@ class BatterySensor(SensorBase):
 
         self._state = random.randint(0, 100)
 
-    # This property can return additional metadata about this device. Here it's
-    # returning the voltage of the battery. The actual percentage is returned in
-    # the state property below. These values are displayed in the entity details
-    # screen at the bottom below the history graph.
-    # A number of defined attributes are available, see the homeassistant.const module
-    # for constants starting with ATTR_*.
-    # Again, if these values change, the async_write_ha_state method should be called.
-    # in this implementation, these values are assumed to be static.
-    # Note this functionality to display addition data on an entity appears to be
-    # exclusive to sensors. This information is not shown in the UI for a cover.
-    @property
-    def device_state_attributes(self):
-        """Return the state attributes of the device."""
-        return {ATTR_VOLTAGE: self._roller.battery_voltage}
-
     # The value of this sensor. As this is a DEVICE_CLASS_BATTERY, this value must be
     # the battery level as a percentage (between 0 and 100)
     @property
