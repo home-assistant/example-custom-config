@@ -24,7 +24,7 @@ from .const import DOMAIN
 async def async_setup_entry(
     hass: HomeAssistant,
     config_entry: ConfigEntry,
-    async_add_devices: AddEntitiesCallback,
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Add cover for passed config_entry in HA."""
     # The hub is loaded from the associated hass.data entry that was created in the
@@ -32,7 +32,7 @@ async def async_setup_entry(
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
     # Add all entities to HA
-    async_add_devices([HelloWorldCover(roller) for roller in hub.rollers])
+    async_add_entities(HelloWorldCover(roller) for roller in hub.rollers)
 
 
 # This entire class could be written to extend a base class to ensure common attributes
