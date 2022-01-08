@@ -30,9 +30,6 @@ class ExampleSensor(SensorEntity):
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self) -> None:
-        """Initialize the sensor."""
-
     def update(self) -> None:
         """Fetch new state data for the sensor.
 
