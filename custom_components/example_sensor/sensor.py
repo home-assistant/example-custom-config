@@ -1,7 +1,11 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -21,11 +25,13 @@ def setup_platform(
 class ExampleSensor(SensorEntity):
     """Representation of a Sensor."""
 
-    def __init__(self):
+    _attr_name = "Example Temperature"
+    _attr_native_unit_of_measurement = TEMP_CELSIUS
+    _attr_device_class = SensorDeviceClass.TEMPERATURE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self) -> None:
         """Initialize the sensor."""
-        self._state = None
-        self._attr_name = 'Example Temperature'
-        self._attr_native_unit_of_measurement = TEMP_CELSIUS
 
     def update(self) -> None:
         """Fetch new state data for the sensor.
