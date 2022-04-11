@@ -13,7 +13,7 @@ Configuration:
 To use the mqtt_example component you will need to add the following to your
 configuration.yaml file.
 
-mqtt_basic:
+mqtt_basic_sync:
   topic: "home-assistant/mqtt_example"
 """
 from __future__ import annotations
@@ -25,7 +25,7 @@ from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers.typing import ConfigType
 
 # The domain of your component. Should be equal to the name of your component.
-DOMAIN = "mqtt_basic"
+DOMAIN = "mqtt_basic_sync"
 
 CONF_TOPIC = 'topic'
 DEFAULT_TOPIC = 'home-assistant/mqtt_example'
