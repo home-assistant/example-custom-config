@@ -1,10 +1,10 @@
 {
   "domain": "hello_world",
   "name": "Hello World",
-  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/hello_world/",
-  "dependencies": [],
   "codeowners": [],
-  "requirements": [],
+  "dependencies": [],
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/hello_world/",
   "iot_class": "local_polling",
+  "requirements": [],
   "version": "0.1.0"
 }
