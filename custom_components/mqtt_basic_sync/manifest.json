@@ -1,10 +1,10 @@
 {
   "domain": "mqtt_basic_sync",
   "name": "MQTT Basic Example",
-  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/mqtt_basic/",
-  "dependencies": ["mqtt"],
   "codeowners": [],
-  "requirements": [],
+  "dependencies": ["mqtt"],
+  "documentation": "https://github.com/home-assistant/example-custom-config/tree/master/custom_components/mqtt_basic/",
   "iot_class": "local_polling",
+  "requirements": [],
   "version": "0.1.0"
 }
