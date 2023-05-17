@@ -8,7 +8,10 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import DOMAIN
+import logging
 
+
+_LOGGER = logging.getLogger(__name__)
 
 def setup_platform(
     hass: HomeAssistant,
@@ -40,11 +43,13 @@ class ExampleSensor(SensorEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
+        _LOGGER.info('state ExampleSensor !')
         return self._state
 
     @property
     def unit_of_measurement(self) -> str:
         """Return the unit of measurement."""
+        _LOGGER.info('unit_of_measurement ExampleSensor !')
         return TEMP_CELSIUS
 
     def update(self) -> None:
@@ -52,4 +57,5 @@ class ExampleSensor(SensorEntity):
 
         This is the only method that should fetch new data for Home Assistant.
         """
+        _LOGGER.info('update ExampleSensor !')
         self._state = self.hass.data[DOMAIN]['temperature']
