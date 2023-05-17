@@ -33,7 +33,7 @@ class MySwitch(SwitchEntity):
 
     def __init__(self):
 #         _LOGGER.info(f'turn_on.kwargs={kwargs}')
-        _LOGGER.
+        _LOGGER.info('init MySwitch start!')
         self._is_on = False
         self._attr_device_info ="ssxSwitchEntity_attr_device_info"  # For automatic device registration
         self._attr_unique_id = "ssxSwitchEntity_attr_unique_id"
@@ -41,12 +41,15 @@ class MySwitch(SwitchEntity):
     @property
     def is_on(self):
         """If the switch is currently on or off."""
+        _LOGGER.info('is_on.self------------')
         return self._is_on
 
     def turn_on(self, **kwargs):
         """Turn the switch on."""
+        _LOGGER.info(f'turn_on.self={kwargs}')
         self._is_on = True
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
+        _LOGGER.info(f'turn_off.self={kwargs}')
         self._is_on = False
