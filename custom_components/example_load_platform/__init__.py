@@ -15,5 +15,6 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     }
 
     hass.helpers.discovery.load_platform('sensor', DOMAIN, {}, config)
+    hass.helpers.discovery.load_platform('switch', DOMAIN, {}, config)
 
     return True

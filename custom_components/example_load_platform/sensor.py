@@ -29,6 +29,8 @@ class ExampleSensor(SensorEntity):
     def __init__(self) -> None:
         """Initialize the sensor."""
         self._state = None
+        self._attr_device_info ="ssxSensorEntity_attr_device_info"  # For automatic device registration
+        self._attr_unique_id = "ssxSensorEntity_attr_unique_id"
 
     @property
     def name(self) -> str:
