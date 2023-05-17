@@ -11,7 +11,8 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Your controller/hub specific code."""
     # Data that you want to share with your platforms
     hass.data[DOMAIN] = {
-        'temperature': 23
+        'temperature': 23,
+        'ssxVar1': 'hello world'
     }
 
     hass.helpers.discovery.load_platform('sensor', DOMAIN, {}, config)

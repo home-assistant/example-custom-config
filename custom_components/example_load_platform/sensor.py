@@ -9,6 +9,8 @@ from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import DOMAIN
 import logging
+import random
+
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -58,4 +60,5 @@ class ExampleSensor(SensorEntity):
         This is the only method that should fetch new data for Home Assistant.
         """
         _LOGGER.info('update ExampleSensor !')
-        self._state = self.hass.data[DOMAIN]['temperature']
+        # self._state = self.hass.data[DOMAIN]['temperature']
+        self._state = random.randint(-20,99)
