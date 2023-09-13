@@ -21,8 +21,7 @@ from homeassistant.helpers.typing import ConfigType
 DOMAIN = "hello_world_async"
 
 
-@asyncio.coroutine
-def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Setup our skeleton component."""
     # States are in the format DOMAIN.OBJECT_ID.
     hass.states.async_set('hello_world_async.Hello_World', 'Works!')
