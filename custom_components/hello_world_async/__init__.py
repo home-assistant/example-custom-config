@@ -12,17 +12,17 @@ hello_world_async:
 """
 from __future__ import annotations
 
-import asyncio
-
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
 # The domain of your component. Should be equal to the name of your component.
 DOMAIN = "hello_world_async"
 
+# Use empty_config_schema because the component does not have any config options
+CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
-@asyncio.coroutine
-def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Setup our skeleton component."""
     # States are in the format DOMAIN.OBJECT_ID.
     hass.states.async_set('hello_world_async.Hello_World', 'Works!')
