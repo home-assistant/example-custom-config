@@ -118,7 +118,7 @@ class BatterySensor(SensorBase):
 class IlluminanceSensor(SensorBase):
     """Representation of a Sensor."""
 
-    device_class = SensorDeviceClass.BATTERY
+    device_class = SensorDeviceClass.ILLUMINANCE
     _attr_unit_of_measurement = LIGHT_LUX
 
     def __init__(self, roller):
