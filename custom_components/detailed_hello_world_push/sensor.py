@@ -7,11 +7,16 @@
 # battery), the unit_of_measurement should match what's expected.
 import random
 
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 from homeassistant.const import (
     ATTR_VOLTAGE,
-    DEVICE_CLASS_BATTERY,
-    DEVICE_CLASS_ILLUMINANCE,
     PERCENTAGE,
+    LIGHT_LUX,
+    ATTR_UNIT_OF_MEASUREMENT,
 )
 from homeassistant.helpers.entity import Entity
 
@@ -79,7 +84,7 @@ class BatterySensor(SensorBase):
     # The class of this device. Note the value should come from the homeassistant.const
     # module. More information on the available devices classes can be seen here:
     # https://developers.home-assistant.io/docs/core/entity/sensor
-    device_class = DEVICE_CLASS_BATTERY
+    device_class = SensorDeviceClass.BATTERY
 
     # The unit of measurement for this entity. As it's a DEVICE_CLASS_BATTERY, this
     # should be PERCENTAGE. A number of units are supported by HA, for some
@@ -113,8 +118,8 @@ class BatterySensor(SensorBase):
 class IlluminanceSensor(SensorBase):
     """Representation of a Sensor."""
 
-    device_class = DEVICE_CLASS_ILLUMINANCE
-    _attr_unit_of_measurement = "lx"
+    device_class = SensorDeviceClass.ILLUMINANCE
+    _attr_unit_of_measurement = LIGHT_LUX
 
     def __init__(self, roller):
         """Initialize the sensor."""
