@@ -10,7 +10,6 @@ from homeassistant.components.cover import (
     CoverEntityFeature,
     CoverEntity,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -21,7 +20,7 @@ from .const import DOMAIN
 # This function is called as part of the __init__.async_setup_entry (via the
 # hass.config_entries.async_forward_entry_setup call)
 async def async_setup_entry(
-    _hass: HomeAssistant,
+    hass: HomeAssistant,
     config_entry: HubConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
