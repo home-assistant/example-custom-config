@@ -10,10 +10,10 @@ from homeassistant.components.cover import (
     CoverEntityFeature,
     CoverEntity,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from . import HubConfigEntry
 from .const import DOMAIN
 
 
@@ -21,13 +21,13 @@ from .const import DOMAIN
 # hass.config_entries.async_forward_entry_setup call)
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    config_entry: HubConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Add cover for passed config_entry in HA."""
-    # The hub is loaded from the associated hass.data entry that was created in the
+    # The hub is loaded from the associated entry runtime data that was set in the
     # __init__.async_setup_entry function
-    hub = hass.data[DOMAIN][config_entry.entry_id]
+    hub = config_entry.runtime_data
 
     # Add all entities to HA
     async_add_entities(HelloWorldCover(roller) for roller in hub.rollers)

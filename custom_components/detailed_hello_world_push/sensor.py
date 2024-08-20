@@ -9,17 +9,16 @@ import random
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
-    SensorEntity,
-    SensorStateClass,
 )
 from homeassistant.const import (
-    ATTR_VOLTAGE,
     PERCENTAGE,
     LIGHT_LUX,
-    ATTR_UNIT_OF_MEASUREMENT,
 )
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from . import HubConfigEntry
 from .const import DOMAIN
 
 
@@ -27,9 +26,13 @@ from .const import DOMAIN
 # Note how both entities for each roller sensor (battry and illuminance) are added at
 # the same time to the same list. This way only a single async_add_devices call is
 # required.
-async def async_setup_entry(hass, config_entry, async_add_entities):
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: HubConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
     """Add sensors for passed config_entry in HA."""
-    hub = hass.data[DOMAIN][config_entry.entry_id]
+    hub = config_entry.runtime_data
 
     new_devices = []
     for roller in hub.rollers:
