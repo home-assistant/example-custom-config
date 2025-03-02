@@ -23,7 +23,7 @@ from .const import DOMAIN
 
 
 # See cover.py for more details.
-# Note how both entities for each roller sensor (battry and illuminance) are added at
+# Note how both entities for each roller sensor (battery and illuminance) are added at
 # the same time to the same list. This way only a single async_add_devices call is
 # required.
 async def async_setup_entry(
