@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.discovery import load_platform
 from homeassistant.helpers.typing import ConfigType
 
 DOMAIN = 'example_load_platform'
@@ -14,6 +15,6 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
         'temperature': 23
     }
 
-    hass.helpers.discovery.load_platform('sensor', DOMAIN, {}, config)
+    load_platform(hass, 'sensor', DOMAIN, {}, config)
 
     return True
