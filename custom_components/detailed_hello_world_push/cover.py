@@ -55,7 +55,7 @@ class HelloWorldCover(CoverEntity):
         # A unique_id for this entity with in this domain. This means for example if you
         # have a sensor on this cover, you must ensure the value returned is unique,
         # which is done here by appending "_cover". For more information, see:
-        # https://developers.home-assistant.io/docs/entity_registry_index/#unique-id-requirements
+        # https://contributors.home-assistant.io/core/entities/registry/#unique-id
         # Note: This is NOT used to generate the user visible Entity ID used in automations.
         self._attr_unique_id = f"{self._roller.roller_id}_cover"
 
@@ -97,7 +97,7 @@ class HelloWorldCover(CoverEntity):
     # set when the device is first added, and they are not always automatically
     # refreshed by HA from it's internal cache.
     # For more information see:
-    # https://developers.home-assistant.io/docs/device_registry_index/#device-properties
+    # https://contributors.home-assistant.io/core/integrations/device-registry/#device-properties
     @property
     def device_info(self) -> DeviceInfo:
         """Information about this entity/device."""
@@ -124,7 +124,7 @@ class HelloWorldCover(CoverEntity):
     # method for hos this is implemented in this example.
     # The properties that are expected for a cover are based on the supported_features
     # property of the object. In the case of a cover, see the following for more
-    # details: https://developers.home-assistant.io/docs/core/entity/cover/
+    # details: https://contributors.home-assistant.io/core/entities/cover/
     @property
     def current_cover_position(self):
         """Return the current position of the cover."""

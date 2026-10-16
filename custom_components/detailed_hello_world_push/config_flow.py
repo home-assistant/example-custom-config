@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 # further examples.
 # Note the input displayed to the user will be translated. See the
 # translations/<lang>.json file and strings.json. See here for further information:
-# https://developers.home-assistant.io/docs/config_entries_config_flow_handler/#translations
+# https://contributors.home-assistant.io/core/integrations/config-flow/#texts-and-translations
 # At the time of writing I found the translations created by the scaffold didn't
 # quite work as documented and always gave me the "Lokalise key references" string
 # (in square brackets), rather than the actual translated value. I did not attempt to
